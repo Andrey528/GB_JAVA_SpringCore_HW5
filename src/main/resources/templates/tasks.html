@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <label for="selectFilter">Filter: </label>
+    <div name="filterStatus" id="selectFilter">
+      <a th:each="status : ${statuses}" th:text="${status}" th:attr="onclick=|filterTask('${status}')|" class="btn btn-primary"></a>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Creation Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="task : ${tasks}" th:id="${'taskItem' + task.id}">
+          <td th:text="${task.id}"></td>
+          <td><input type="text" th:value="${task.description}" name="description" class="form-control"></td>
+          <td>
+            <select name="editStatus" class="form-select">
+              <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}" th:selected="${status == task.status}"></option>
+            </select>
+          </td>
+          <td th:text="${task.createdAt}"></td>
+          <td>
+            <button th:attr="onclick=|editTask('${task.id}')|" class="btn btn-primary">Edit</button>
+            <button th:attr="onclick=|deleteTask('${task.id}')|" class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <form id="createTaskForm" class="mt-3">
+      <input type="text" name="description" placeholder="Enter task description" class="form-control" >
+      <select name="status" class="form-select">
+        <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
+      </select>
+      <button type="submit" class="btn btn-success">Create Task</button>
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script th:src="@{/script.js}"></script>
+</body>
+</html>
