@@ -1,0 +1,8 @@
+//новый образ Docker с именем “mynotes-db”
+
+docker build -t mynotes-db .
+
+//Эта команда создаст и запустит новый контейнер с именем “mynotes-db”,
+//привязав порт 15432 на вашем компьютере к порту 5432 в контейнере
+
+docker run --name mynotes-db -p 15432:5432 -d mynotes-db
