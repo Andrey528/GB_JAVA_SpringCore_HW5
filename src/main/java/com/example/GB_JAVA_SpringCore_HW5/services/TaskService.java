@@ -36,6 +36,7 @@ public class TaskService {
 
         if (optionalTask.isPresent()) {
             Task task = optionalTask.get();
+            task.setTitle(taskDetails.getTitle());
             task.setDescription(taskDetails.getDescription());
             task.setStatus(taskDetails.getStatus());
             task.setCreatedAt(LocalDateTime.now());
