@@ -9,3 +9,17 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - env
+          - info
+          - health
+          - metrics
+          - prometheus
+  endpoint:
+    health:
+      show-details: always

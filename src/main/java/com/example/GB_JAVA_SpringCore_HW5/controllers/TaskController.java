@@ -3,6 +3,8 @@ package com.example.GB_JAVA_SpringCore_HW5.controllers;
 import com.example.GB_JAVA_SpringCore_HW5.models.Task;
 import com.example.GB_JAVA_SpringCore_HW5.models.TaskStatus;
 import com.example.GB_JAVA_SpringCore_HW5.services.TaskService;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Metrics;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TaskController {
     private final TaskService taskService;
+    private final Counter addTaskCounter = Metrics.counter("add_task_count");
 
     @GetMapping
     public String getAllTasks(Model model) {
@@ -31,6 +34,7 @@ public class TaskController {
 
     @PostMapping
     public ResponseEntity<Void> addTask(@RequestBody Task task) {
+        addTaskCounter.increment();
         taskService.createTask(task);
         return ResponseEntity.ok().build();
     }
